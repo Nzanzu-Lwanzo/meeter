@@ -26,7 +26,7 @@ const Register = () => {
         return;
       }
 
-      const response = await fetch(BASE_URL.concat("/register"), {
+      const response = await fetch(BASE_URL.concat("/register-user"), {
         body: JSON.stringify(user),
         method: "POST",
         mode: "cors",

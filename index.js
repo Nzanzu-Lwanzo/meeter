@@ -7,6 +7,7 @@ import {
   registerUser,
   getAUser,
   deleteAllUsers,
+  deleteAUser,
 } from "./backend/db/helpers.mjs";
 import cors from "cors";
 import { fileURLToPath } from "node:url";
@@ -17,7 +18,7 @@ const App = express();
 const server = http.createServer(App);
 const CORS_OPTIONS = {
   origin: ["localhost", "http://localhost:5173", "http://localhost:5000"],
-  methods: ["GET", "POST"],
+  methods: ["GET", "POST","DELETE"],
 };
 const io = new Server(server, {
   cors: CORS_OPTIONS,
@@ -69,7 +70,7 @@ App.get("*", function (req, res) {
   res.sendFile(path.join(__dirname, "/frontend/dist/index.html"));
 });
 
-App.post("/register", async (req, res) => {
+App.post("/register-user", async (req, res) => {
   try {
     await registerUser({ name: req.body.name, id: req.body.id });
     res.sendStatus(201);
@@ -97,7 +98,16 @@ App.get("/user/:id", async (req, res) => {
   }
 });
 
+App.delete("/delete-account/:id", async function (req, res) {
+  try {
+    await deleteAUser(req.params.id);
+    res.sendStatus(200);
+  } catch (e) {
+    res.sendStatus(500);
+  }
+});
+
 // LISTEN FOR REQUESTS
 server.listen(5000, function () {
-  deleteAllUsers();
+  // deleteAllUsers();
 });

@@ -45,3 +45,16 @@ export const deleteAllUsers = async () => {
     return false;
   }
 };
+
+export const deleteAUser = async (id) => {
+  try {
+    const users = await getAllUsers();
+    const filteredUsers = users.filter((user) => user.id !== id);
+    writeFile(usersDbFilePath, JSON.stringify(filteredUsers), {
+      encoding: "utf-8",
+    });
+    return true;
+  } catch (e) {
+    return false;
+  }
+};

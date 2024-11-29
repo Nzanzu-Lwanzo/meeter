@@ -1,6 +1,6 @@
 type ENVType = "dev" | "prod";
 
-export const ENV: ENVType = "dev";
+export const ENV: ENVType = "prod";
 
 const ORIGINS: Record<ENVType, string> = {
   dev: "http://localhost:5000", // The origin of the server
