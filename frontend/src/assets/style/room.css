@@ -1,0 +1,150 @@
+svg {
+  height: 24px;
+  fill: #000;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.Room {
+  height: 100vh;
+  width: 100%;
+  background-color: #333;
+}
+
+.card {
+  width: 60%;
+  height: 80vh;
+  background-color: #fff;
+  border-radius: 3px;
+
+  display: grid;
+  grid-template-rows: 10% 75% 15%;
+}
+
+.card__top,
+.card__bottom {
+  width: 100%;
+}
+
+.card__top {
+  border-bottom: 1px solid #333;
+}
+.card__bottom {
+  border-top: 1px solid #333;
+}
+
+.card__top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.card__top .chat__with {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.videos {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.videos .my__video {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  width: 200px;
+  height: 150px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.card__bottom .buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 0.5rem;
+}
+
+.card__bottom .buttons button {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  transition: 0.2s ease-out;
+}
+
+.card__bottom .buttons button:hover {
+  background-color: #333;
+}
+
+.card__bottom .buttons button:hover svg *:not(rect) {
+  stroke: #fff;
+}
+
+.card__bottom .buttons .hangout {
+  height: 45px;
+  width: 45px;
+}
+
+.card__bottom .buttons .hangout svg *:not(rect) {
+  stroke: red;
+}
+
+.card__bottom .buttons .hangout:hover {
+  background-color: red;
+}
+
+.card__bottom .buttons .hangout:hover svg *:not(rect) {
+  stroke: #fff;
+}
+
+/* MEDIA QUERIES */
+@media only all and (max-width: 1200px) {
+  .card {
+    width: 80%;
+  }
+}
+
+@media only all and (max-width: 600px) {
+  .card {
+    width: 90%;
+  }
+
+  .videos .my__video {
+    bottom: 0.5rem;
+    top: auto;
+    right: 0.5rem;
+    width: 150px;
+    height: 100px;
+  }
+}
+
+@media only all and (max-width: 425px) {
+  .card {
+    width: 100%;
+    height: 100%;
+  }
+
+  .card__top span {
+    font-size: 1rem;
+  }
+
+  main.Room {
+    height: 100vh;
+    overflow: hidden;
+  }
+}

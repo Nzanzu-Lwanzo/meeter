@@ -1,0 +1,81 @@
+main.list__calls {
+  background-color: #eee;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  justify-items: center;
+  align-items: center;
+}
+
+.list__users {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 3px;
+  list-style: none;
+  justify-content: flex-start;
+  width: 500px;
+  height: 80vh;
+  background-color: #fff;
+}
+
+.user__elt {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #333;
+  color: #fff;
+  border-radius: 3px;
+  font-size: 0.8rem;
+}
+
+.call__button {
+  height: 30px;
+  width: 30px;
+  background-color: #fff;
+  border-radius: 50%;
+  cursor: poin;
+}
+
+@media only all and (max-width: 1150px) {
+  .list__users {
+    width: 90%;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  .user__elt {
+    padding: 0.5rem;
+  }
+}
+
+@media only all and (max-width: 600px) {
+  main.list__calls {
+    all: initial;
+    background-color: #eee;
+    height: 100%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    justify-content: flex-start;
+  }
+  .list__users {
+    height: fit-content;
+    width: 100%;
+  }
+}
+
+@media only all and (max-width: 375px) {
+  main.list__calls {
+    padding: 2rem 1rem;
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "meeter",
+  "version": "1.0.0",
+  "description": "A video call app with React, WebRTC, Socket.io",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "build": "npm install --prefix frontend && npm run build --prefix frontend && npm install",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "WebRTC",
+    "Socket.Io",
+    "React",
+    "Chat"
+  ],
+  "author": "NZANZU MUHAYRWA L.",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "socket.io": "^4.8.1"
+  }
+}

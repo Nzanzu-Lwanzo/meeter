@@ -1,0 +1,1 @@
+DEFAULT FRONTEND BUILD COMMAND = "build": "tsc -b && vite build",
