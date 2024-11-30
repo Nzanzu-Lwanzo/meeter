@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { useSocketContext } from "../../contexts/SocketContext";
 import videoCall from "../../utils/meeting.setup";
 import VideoCallStore from "../../stores/VideoCallStore";
+import { enqueueSnackbar } from "notistack";
 
 const UserToCall = ({ user }: { user: User }) => {
   const [calling, setCalling] = useState(false);
@@ -30,6 +31,11 @@ const UserToCall = ({ user }: { user: User }) => {
       return;
     }
 
+    if (!socket?.connected) {
+      enqueueSnackbar("You're not connected to start the call !");
+      return;
+    }
+
     try {
       setCalling(true);
 
@@ -49,7 +55,7 @@ const UserToCall = ({ user }: { user: User }) => {
           },
           {
             handleError(e) {
-              console.log(e);
+              enqueueSnackbar(e.message);
               setCalling(false);
               setCallState("no_call");
             },
@@ -78,6 +84,7 @@ const UserToCall = ({ user }: { user: User }) => {
           }
         });
     } catch (e) {
+      enqueueSnackbar("An error occurred, please retry !");
       setCalling(false);
     }
   };

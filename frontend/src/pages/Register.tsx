@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { lsWrite } from "../lib/ls.io";
 import { type User } from "../utils/@types";
 import { BASE_URL } from "../utils/constants";
+import { enqueueSnackbar } from "notistack";
 
 const Register = () => {
   const navigateTo = useNavigate();
@@ -43,6 +44,7 @@ const Register = () => {
       }
     } catch (e) {
       setRequest("error");
+      enqueueSnackbar("An error occurred, please retry !");
     }
   };
 

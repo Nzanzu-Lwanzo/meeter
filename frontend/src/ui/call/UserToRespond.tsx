@@ -5,6 +5,7 @@ import VideoCallStore from "../../stores/VideoCallStore";
 import videoCall from "../../utils/meeting.setup";
 import { useNavigate } from "react-router-dom";
 import { debug } from "../../utils/helpers";
+import { enqueueSnackbar } from "notistack";
 
 const UserToRespond = ({ user }: { user: User }) => {
   const { socket } = useSocketContext();
@@ -19,6 +20,11 @@ const UserToRespond = ({ user }: { user: User }) => {
   const navigateTo = useNavigate();
 
   const respondCall = () => {
+    if (!socket?.connected) {
+      enqueueSnackbar("You're not connected to answer the call !");
+      return;
+    }
+
     try {
       // Lookup in the pendingCalls state
       // and find the call whose user
@@ -45,7 +51,7 @@ const UserToRespond = ({ user }: { user: User }) => {
           },
           {
             handleError(e) {
-              console.log(e);
+              enqueueSnackbar(e.message);
             },
           }
         )
@@ -75,7 +81,9 @@ const UserToRespond = ({ user }: { user: User }) => {
             navigateTo(`/call/${call?.callData.call_id}`);
           }
         });
-    } catch (e) {}
+    } catch (e) {
+      enqueueSnackbar("An error occurred, please retry !");
+    }
   };
 
   return (

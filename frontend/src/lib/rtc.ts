@@ -8,6 +8,12 @@ import {
 } from "./@interfaces";
 import { handleDataChannelMessageType, StreamTypeType } from "./@types";
 import { nanoid } from "nanoid";
+import adapter from "webrtc-adapter";
+
+// ADAPTER SETTINGS
+adapter.disableLog(true);
+adapter.disableWarnings(true);
+// *************************
 
 export default class RTC {
   connection: RTCPeerConnection | null;
@@ -19,11 +25,7 @@ export default class RTC {
   blobs: Blob[];
   datachannel: RTCDataChannel | null;
 
-  constructor({
-    configurations,
-    constraints,
-    streamType,
-  }: RTCConstructorType) {
+  constructor({ configurations, constraints, streamType }: RTCConstructorType) {
     this.connection = null;
     this.constraints = constraints;
     this.configurations = configurations;

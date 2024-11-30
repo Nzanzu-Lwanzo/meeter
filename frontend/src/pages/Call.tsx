@@ -7,6 +7,7 @@ import UserToRespond from "../ui/call/UserToRespond";
 import VideoCallStore from "../stores/VideoCallStore";
 import { BASE_URL } from "../utils/constants";
 import { Link, useNavigate } from "react-router-dom";
+import { enqueueSnackbar } from "notistack";
 
 const Call = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -60,7 +61,9 @@ const Call = () => {
                   navigateTo("/register");
                   localStorage.removeItem("meeterAuth");
                 }
-              } catch (e) {}
+              } catch (e) {
+                enqueueSnackbar("An error occurred, please retry !");
+              }
             }}
           >
             Delete Account

@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import videoCall from "../../../utils/meeting.setup";
 import { useSocketContext } from "../../../contexts/SocketContext";
 import VideoCallStore from "../../../stores/VideoCallStore";
+import { enqueueSnackbar } from "notistack";
 
 const Hangout = () => {
   const navigateTo = useNavigate();
@@ -14,6 +15,11 @@ const Hangout = () => {
       type="button"
       className="hangout"
       onClick={() => {
+        if (!socket?.connected) {
+          enqueueSnackbar("You're not connected to end the call !");
+          return;
+        }
+
         videoCall.terminate({
           handleSuccess() {
             // Signal the other user that we're ending the call
@@ -22,13 +28,13 @@ const Hangout = () => {
               call_id,
             });
 
-            setCallState("no_call")
+            setCallState("no_call");
 
             // Quit the room page
             navigateTo("/");
           },
-          handleError(e) {
-            console.log(e);
+          handleError() {
+            enqueueSnackbar("An error occurred, please retry !");
           },
         });
       }}

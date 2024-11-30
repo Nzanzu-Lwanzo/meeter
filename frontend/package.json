@@ -11,12 +11,14 @@
   },
   "dependencies": {
     "nanoid": "^5.0.9",
+    "notistack": "^3.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.0.1",
     "socket.io-client": "^4.8.1",
-    "zustand": "^5.0.1",
-    "vite": "^5.4.10"
+    "vite": "^5.4.10",
+    "webrtc-adapter": "^9.0.1",
+    "zustand": "^5.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
