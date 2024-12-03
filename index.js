@@ -1,24 +1,31 @@
 // IMPORTS
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import http from "node:http";
 import { Server } from "socket.io";
 import {
-  getAllUsers,
-  registerUser,
-  getAUser,
-  deleteAllUsers,
-  deleteAUser,
+  getAllPeers,
+  registerPeer,
+  getPeer,
+  deleteAllPeers,
+  deletePeer,
+  generateToken,
+  sessionMiddleware,
 } from "./backend/db/helpers.mjs";
 import cors from "cors";
 import { fileURLToPath } from "node:url";
 import path, { dirname } from "node:path";
+import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
 
 // GLOBAL VARS AND SETUPS
 const App = express();
 const server = http.createServer(App);
 const CORS_OPTIONS = {
   origin: ["localhost", "http://localhost:5173", "http://localhost:5000"],
-  methods: ["GET", "POST","DELETE"],
+  methods: ["GET", "POST", "DELETE"],
+  credentials: true,
 };
 const io = new Server(server, {
   cors: CORS_OPTIONS,
@@ -64,50 +71,62 @@ io.on("connection", function (socket) {
 // REGISTER USER - CREATE A PROFILE - CREATE ACCOUNT
 App.use(cors(CORS_OPTIONS));
 App.use(express.json());
+App.use(cookieParser());
 App.use(express.static(path.join(__dirname, "/frontend/dist")));
-
-App.get("*", function (req, res) {
-  res.sendFile(path.join(__dirname, "/frontend/dist/index.html"));
-});
 
 App.post("/register-user", async (req, res) => {
   try {
-    await registerUser({ name: req.body.name, id: req.body.id });
-    res.sendStatus(201);
+    const peer = await registerPeer({ name: req.body.name, id: req.body.id });
+    const token = generateToken({ name: peer.name, id: peer.public_id });
+    res
+      .cookie("msid", token, {
+        maxAge: Date.now(),
+        secure: true,
+        httpOnly: true,
+      })
+      .status(201)
+      .json(peer);
   } catch (e) {
     console.log(e);
     res.sendStatus(500);
   }
 });
 
-App.get("/users", async (req, res) => {
+App.get("/users", sessionMiddleware, async (req, res) => {
   try {
-    const users = await getAllUsers();
-    res.json(users);
+    const peers = await getAllPeers();
+    res.json(peers);
   } catch (e) {
     res.sendStatus(500);
   }
 });
 
-App.get("/user/:id", async (req, res) => {
+App.get("/user/:id", sessionMiddleware, async (req, res) => {
   try {
-    const user = await getAUser(req.params.id);
-    res.json(user);
+    const peer = await getPeer(req.params.id);
+    res.json(peer);
   } catch (e) {
     res.sendStatus(500);
   }
 });
 
-App.delete("/delete-account/:id", async function (req, res) {
+App.delete("/delete-account/:id", sessionMiddleware, async function (req, res) {
   try {
-    await deleteAUser(req.params.id);
+    await deletePeer(req.params.id);
     res.sendStatus(200);
   } catch (e) {
     res.sendStatus(500);
   }
 });
 
+App.get("*", function (req, res) {
+  res.sendFile(path.join(__dirname, "/frontend/dist/index.html"));
+});
+
 // LISTEN FOR REQUESTS
 server.listen(5000, function () {
-  // deleteAllUsers();
+  mongoose.connect(process.env.MONGODB_URI, {
+    dbName: "meeter",
+    autoIndex: false,
+  });
 });

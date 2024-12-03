@@ -16,11 +16,12 @@ const Call = () => {
   const navigateTo = useNavigate();
 
   useEffect(() => {
-    const getAllUsers = async () => {
+    const getAllPeers = async () => {
       try {
         const response = await fetch(BASE_URL.concat("/users"), {
           method: "GET",
           mode: "cors",
+          credentials: "include",
         });
 
         if (response.ok) {
@@ -28,11 +29,12 @@ const Call = () => {
           setUsers(_users);
         }
       } catch (e) {
-        console.log(e);
+        enqueueSnackbar("Please, make sure you're registered !");
+        navigateTo("/register");
       }
     };
 
-    getAllUsers();
+    getAllPeers();
   }, []);
 
   return (

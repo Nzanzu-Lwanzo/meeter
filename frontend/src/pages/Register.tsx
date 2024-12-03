@@ -31,6 +31,7 @@ const Register = () => {
         body: JSON.stringify(user),
         method: "POST",
         mode: "cors",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
