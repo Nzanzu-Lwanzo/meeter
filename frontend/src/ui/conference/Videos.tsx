@@ -1,7 +1,5 @@
 import { useEffect, useRef } from "react";
 import VideoCallStore from "../../stores/VideoCallStore";
-import me from "../../assets/videos/mock-2.mp4";
-import them from "../../assets/videos/mock.mp4";
 
 const Videos = () => {
   const meRef = useRef<HTMLVideoElement | null>(null);
@@ -22,7 +20,6 @@ const Videos = () => {
   return (
     <div className="videos">
       <video
-        src={them}
         autoPlay={true}
         controls={false}
         id="them__video"
@@ -31,7 +28,7 @@ const Videos = () => {
       ></video>
 
       <div className="my__video">
-        <video src={me} muted autoPlay={true} ref={meRef} id="MYFEED"></video>
+        <video muted autoPlay={true} ref={meRef} controls={false} id="MYFEED"></video>
       </div>
     </div>
   );
